@@ -46,7 +46,10 @@ pub fn progress_bar(total_task: usize, current_task: usize) {
     DisplayAttribute::move_cursor(TERM_SIZE.1, 2);
     DisplayAttribute::clear_line();
 
-    print!("{}:  {bar}  {perc_done:.1}%\r", "Progress".blue_bold());
+    print!(
+        "{}: [{current_task}/{total_task}] {bar} {perc_done:.1}%\r",
+        "Progress".green_bold()
+    );
     stdout().flush();
 
     DisplayAttribute::restore_cursor_pos();
