@@ -31,7 +31,7 @@ pub fn restore_bar_setup() {
 pub fn progress_bar(total_task: usize, current_task: usize) {
     let perc_done = (current_task as f32 / total_task as f32) * 100.0;
 
-    let bar_width = TERM_SIZE.0 as usize / 2 + 8;
+    let bar_width = TERM_SIZE.0 as usize / 2;
     let filled = (perc_done / 100.0 * bar_width as f32) as usize;
 
     let mut bar = BAR.lock().unwrap();
@@ -46,10 +46,7 @@ pub fn progress_bar(total_task: usize, current_task: usize) {
     DisplayAttribute::move_cursor(TERM_SIZE.1, 2);
     DisplayAttribute::clear_line();
 
-    print!(
-        "{}: [{current_task}/{total_task}] {bar}  {perc_done:.1}%\r",
-        "Progress".blue_bold()
-    );
+    print!("{}:  {bar}  {perc_done:.1}%\r", "Progress".blue_bold());
     stdout().flush();
 
     DisplayAttribute::restore_cursor_pos();
