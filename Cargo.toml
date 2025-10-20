@@ -5,7 +5,7 @@ edition = "2024"
 description = "lightweight  and simple progress bar."
 repository = "https://github.com/BayonetArch/spb"
 readme = "README.md"
-license = "mit"
+license = "MIT"
 
 [dependencies]
 simple_term_attr = "0.2.1"
