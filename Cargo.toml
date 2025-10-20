@@ -1,0 +1,11 @@
+[package]
+name = "progress_bar"
+version = "0.1.0"
+edition = "2024"
+description = "lightweight  and simple progress bar."
+repository = "https://github.com/BayonetArch/spb"
+redme = "README.md"
+license = "LICENSE.txt"
+
+[dependencies]
+simple_term_attr = "0.2.1"
