@@ -1,30 +1,33 @@
-use simple_term_attr::{DisplayAttribute, StyleAttributes};
-use std::io::{Write, stdout};
+use simple_term_attr::*;
+use std::io::{self, Write, stdout};
 use std::sync::{LazyLock, Mutex};
 
-static TERM_SIZE: LazyLock<(u16, u16)> = LazyLock::new(|| DisplayAttribute::get_term_size());
+static TERM_SIZE: LazyLock<(u16, u16)> = LazyLock::new(|| get_terminal_size());
 static BAR: Mutex<String> = Mutex::new(String::new());
 
-pub fn initial_bar_setup() {
+pub fn initial_bar_setup() -> io::Result<()> {
     println!();
-    DisplayAttribute::save_cursor_pos();
 
-    DisplayAttribute::set_scrollable_region(0, TERM_SIZE.1 - 1);
+    save_cursor_pos()?;
 
-    DisplayAttribute::restore_cursor_pos();
-    DisplayAttribute::move_cursor_x_lines_up(1);
-    let _ = DisplayAttribute::hide_cursor();
+    set_scrollable_region(0, TERM_SIZE.1 - 1)?;
+
+    restore_cursor_pos()?;
+    move_cursor_up(1)?;
+    hide_cursor()?;
+    Ok(())
 }
 
-pub fn restore_bar_setup() {
-    DisplayAttribute::save_cursor_pos();
+pub fn restore_bar_setup() -> io::Result<()> {
+    save_cursor_pos()?;
 
-    DisplayAttribute::set_scrollable_region(0, TERM_SIZE.1);
-    DisplayAttribute::move_cursor(TERM_SIZE.1, 2);
-    DisplayAttribute::clear_line();
+    set_scrollable_region(0, TERM_SIZE.1)?;
+    move_cursor(TERM_SIZE.1, 2)?;
+    clear_line()?;
 
-    DisplayAttribute::restore_cursor_pos();
-    let _ = DisplayAttribute::show_cursor();
+    restore_cursor_pos()?;
+    show_cursor()?;
+    Ok(())
 }
 
 #[allow(unused)]
@@ -37,14 +40,15 @@ pub fn progress_bar(total_task: usize, current_task: usize) {
     let mut bar = BAR.lock().unwrap();
 
     *bar = "[".to_string();
-    bar.push_str(&"=".repeat(filled));
-    bar.push_str(&" ".repeat(bar_width - filled));
+
+    bar.push_str(&"#".repeat(filled));
+    bar.push_str(&".".repeat(bar_width - filled));
     bar.push(']');
 
-    DisplayAttribute::save_cursor_pos();
+    save_cursor_pos();
 
-    DisplayAttribute::move_cursor(TERM_SIZE.1, 2);
-    DisplayAttribute::clear_line();
+    move_cursor(TERM_SIZE.1, 2);
+    clear_line();
 
     print!(
         "{}: [{current_task}/{total_task}] {bar} {perc_done:.1}%\r",
@@ -52,5 +56,5 @@ pub fn progress_bar(total_task: usize, current_task: usize) {
     );
     stdout().flush();
 
-    DisplayAttribute::restore_cursor_pos();
+    restore_cursor_pos();
 }

@@ -10,16 +10,16 @@ checksum = "2874a2af47a2325c2001a6e6fad9b16a53b802102b528163885171cf92b15976"
 
 [[package]]
 name = "simple_term_attr"
-version = "0.2.1"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6d41bb6a347f7a231f65000b2888e7facfd68d35f13a3cfd069ce8bcc2acbaa"
+checksum = "465390f71ea09745f20d021373624cb6a775221f68195bc508ecc0fe9bb65a4a"
 dependencies = [
  "libc",
 ]
 
 [[package]]
 name = "spb"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "simple_term_attr",
 ]

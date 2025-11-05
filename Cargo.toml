@@ -1,6 +1,6 @@
 [package]
 name = "spb"
-version = "0.1.2"
+version = "0.1.3"
 edition = "2024"
 description = "lightweight  and simple progress bar."
 repository = "https://github.com/BayonetArch/spb"
@@ -8,4 +8,4 @@ readme = "README.md"
 license = "MIT"
 
 [dependencies]
-simple_term_attr = "0.2.1"
+simple_term_attr = "0.3.0"
