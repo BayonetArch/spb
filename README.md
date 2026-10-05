@@ -27,7 +27,7 @@ fn main() {
     initial_bar_setup(); // initial setup for bar
 
     let total_task = 10;
-    let current_task = 0;
+    let mut current_task = 0;
 
     while current_task <= total_task {
         spb::progress_bar(total_task, current_task); // display the bar at bottom
